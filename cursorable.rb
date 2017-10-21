@@ -2,19 +2,23 @@ require "io/console"
 
 module Cursorable
   KEYHASH = {
-    "\e[A"  => :up,
-    "\e[B"  => :down,
-    "\e[C"  => :right,
-    "\e[D"  => :left,
+    "\e[A"  => :left,
+    "\e[B"  => :right,
+    "\e[C"  => :up,
+    "\e[D"  => :down,
     "\r"    => :return,
     "\e"    => :escape,
     "?"     => :question,
     " "     => :spacebar,
   }
 
-  def me
-    puts "me"
-  end
+  MOVES = {
+    up:     [0, 1],
+    down:   [0, -1],
+    left:   [-1, 0],
+    right:  [1, 0]
+  }
+
 
   def get_input
     key = KEYHASH[read_char]
@@ -25,11 +29,13 @@ module Cursorable
   def handle_key(key)
     case key
     when :up, :down, :left, :right
-      puts "make a move"
+      move_cursor(MOVES[key])
     when :question
       puts "directions"
-    when :spacebar, :return
+    when :spacebar
       exit 0
+    when :return
+      puts "highlight possible moves"
     else
       puts key
     end

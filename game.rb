@@ -1,5 +1,3 @@
-require './key_commands'
-require './display'
 require_relative 'pieces/pieces'
 
 class Chess
