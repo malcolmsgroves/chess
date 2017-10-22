@@ -13,7 +13,8 @@ class Rook
   end
 
   def get_moves(board)
-    straight_slide
+    puts "moves #{straight_slide(board)}"
+    straight_slide(board)
   end
 
 

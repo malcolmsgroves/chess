@@ -35,7 +35,7 @@ module Cursorable
     when :spacebar
       exit 0
     when :return
-      puts "highlight possible moves"
+      highlight
     else
       puts key
     end

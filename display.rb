@@ -24,9 +24,7 @@ class Display < Chess
   end
 
 
-  def get_string(square)
-    square.nil? ? "   " : square.to_string
-  end
+  
 
 end
 
