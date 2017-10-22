@@ -35,7 +35,7 @@ module Cursorable
     when :spacebar
       exit 0
     when :return
-      highlight
+      select_square
     else
       puts key
     end

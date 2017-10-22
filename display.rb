@@ -13,7 +13,8 @@ class Display < Chess
   def initialize
     super
     @highlighted = []
-    @selected = [0, 0]
+    @selected = nil
+    @curr_pos = [0, 0]
   end
 
   def play
@@ -24,7 +25,7 @@ class Display < Chess
   end
 
 
-  
+
 
 end
 

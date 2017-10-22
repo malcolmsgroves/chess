@@ -2,8 +2,6 @@ require 'colorize'
 
 module PieceMethods
 
-
-
   WHITE = {
     king:    "\u2654",
     queen:   "\u2655",
@@ -33,22 +31,6 @@ module PieceMethods
     return " " + PIECE[@color][@type] + " "
   end
 
-  # make dir and style instance variables?
-  def diagonal_slide(board)
-    slide(board, :diagonal, :slide)
-  end
-
-  def straight_slide(board)
-    slide(board, :straight, :slide)
-  end
-
-  def diagonal_step(board)
-    slide(board, :diagonal, :step)
-  end
-
-  def straight_step(board)
-    slide(board, :straight, :step)
-  end
 
   def slide(board, dir, style)
     moves = Array.new
@@ -63,9 +45,13 @@ module PieceMethods
         num_step += 1
         coords = next_pos(coords, delta)
       end
+
+      #kill clause
+      if !curr_square.nil? && curr_square.color != board[@pos].color
+        moves.push(coords)
+      end
     end
 
-    
     moves
   end
 
