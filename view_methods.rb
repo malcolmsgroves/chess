@@ -13,7 +13,7 @@ module ViewMethods
     if !@board[@curr_pos].nil? &&
         @board[@curr_pos].color == @turn &&
         @selected.nil?
-      @highlighted = moves_at(@curr_pos)
+      @highlighted = moves_at(@curr_pos) if !moves_at(@curr_pos).nil?
       @selected = @curr_pos
 
     #toggle selected square
@@ -23,6 +23,7 @@ module ViewMethods
 
     elsif @highlighted.include? @curr_pos
       move_piece(@selected, @curr_pos)
+      toggle_turn
       @selected = nil
       @highlighted.clear
     else
@@ -55,7 +56,7 @@ module ViewMethods
       end
       puts
     end
-    puts "Curr = #{@board[@curr_pos]}"
+    puts @message
   end
 
   def get_string(square)

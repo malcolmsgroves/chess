@@ -15,13 +15,21 @@ class Display < Chess
     @highlighted = []
     @selected = nil
     @curr_pos = [0, 0]
+    @message = nil
   end
 
   def play
-    while true
-      render
-      get_input
+    while @game_status != :black_checkmate && @game_status != :white_checkmate
+      curr_turn = @turn
+      while curr_turn == @turn
+        render
+        get_input
+      end
+      @message = update_status
     end
+
+    render
+
   end
 
 

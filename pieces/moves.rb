@@ -43,7 +43,6 @@ module PieceMethods
 
 
   def slide(board, dir, style)
-    puts KNIGHT
     moves = Array.new
     max_step = (style == :step ? 1 : 10)    # step vs slide
     DIRECTIONS[dir].each do |delta|
