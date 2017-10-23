@@ -24,7 +24,17 @@ module PieceMethods
   DIAGONAL = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
   STRAIGHT = [[0, 1], [1, 0], [-1, 0], [0, -1]]
 
-  DIRECTIONS = {diagonal: DIAGONAL, straight: STRAIGHT}
+  knight_moves = []
+
+  [1, -1].each do |dx|
+    [1, -1].each do |dy|
+      knight_moves += [[1 * dx, 2 * dy], [2 * dx, 1 * dy]]
+    end
+  end
+
+  KNIGHT = knight_moves
+
+  DIRECTIONS = {diagonal: DIAGONAL, straight: STRAIGHT, knight: KNIGHT}
 
   def to_string
 
@@ -33,6 +43,7 @@ module PieceMethods
 
 
   def slide(board, dir, style)
+    puts KNIGHT
     moves = Array.new
     max_step = (style == :step ? 1 : 10)    # step vs slide
     DIRECTIONS[dir].each do |delta|
@@ -47,7 +58,7 @@ module PieceMethods
       end
 
       #kill clause
-      if !curr_square.nil? && curr_square.color != board[@pos].color
+      if !curr_square.nil? && curr_square.color != @color
         moves.push(coords)
       end
     end
