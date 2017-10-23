@@ -8,14 +8,51 @@ class Chess
     @kings = {black: [7, 3], white: [0, 3]}
     @status = :in_progress
 
-    (0...8).each do |x|
-      (0...8).each do |y|
-        @board[[x, y]] = nil
+    instantiate_board
+  end
+
+  def instantiate_board
+    (0...8).each do |r|
+      (0...8).each do |c|
+        place_piece(r, c)
       end
     end
-    @board[@kings[:white]] = King.new(:white, @kings[:white])
-    @board[@kings[:black]] = King.new(:black, @kings[:black])
-    @board[[4, 3]] = Queen.new(:black, [4, 3])
+  end
+
+  def place_piece(r, c)
+    if r == 1
+      @board[[r, c]] = Pawn.new(:white, [r, c])
+    elsif r == 6
+      @board[[r, c]] = Pawn.new(:black, [r, c])
+    elsif r == 0
+      if c == 0 || c == 7
+        @board[[r, c]] = Rook.new(:white, [r, c])
+      elsif c == 1 || c == 6
+        @board[[r, c]] = Knight.new(:white, [r, c])
+      elsif c == 2 || c == 5
+        @board[[r, c]] = Bishop.new(:white, [r, c])
+      elsif c == 3
+        @board[[r, c]] = King.new(:white, [r, c])
+      elsif c == 4
+        @board[[r, c]] = Queen.new(:white, [r, c])
+      end
+    elsif r == 7
+      if c == 0 || c == 7
+        @board[[r, c]] = Rook.new(:black, [r, c])
+      elsif c == 1 || c == 6
+        @board[[r, c]] = Knight.new(:black, [r, c])
+      elsif c == 2 || c == 5
+        @board[[r, c]] = Bishop.new(:black, [r, c])
+      elsif c == 3
+        @board[[r, c]] = King.new(:black, [r, c])
+      elsif c == 4
+        @board[[r, c]] = Queen.new(:black, [r, c])
+      end
+    else
+      @board[[r, c]] = nil
+    end
+
+
   end
 
   def moves_at(coords)
