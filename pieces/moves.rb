@@ -62,7 +62,6 @@ module PieceMethods
         moves.push(coords)
       end
     end
-
     moves
   end
 
