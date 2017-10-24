@@ -54,6 +54,7 @@ module PieceMethods
         moves.push(coords)
         num_step += 1
         coords = next_pos(coords, delta)
+        curr_square = board[coords]
       end
 
       #kill clause

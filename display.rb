@@ -2,11 +2,9 @@ require "colorize"
 require_relative "pieces/moves"
 require_relative "game"
 require_relative "cursorable"
-require_relative "view_methods"
 
 class Display < Chess
 
-  include ViewMethods
   include Cursorable
 
 
@@ -32,22 +30,69 @@ class Display < Chess
 
   end
 
+  def move_cursor(move)
+    if on_board(move)
+      @curr_pos = [@curr_pos[0] + move[0], @curr_pos[1] + move[1]]
+    end
+  end
 
+  def select_square
+    # new selected square
+    if !@board[@curr_pos].nil? &&
+        @board[@curr_pos].color == @turn &&
+        @selected.nil?
+      @highlighted = moves_at(@curr_pos) if !moves_at(@curr_pos).nil?
+      @selected = @curr_pos
+
+    #toggle selected square
+    elsif @selected == @curr_pos
+      @selected = nil
+      @highlighted.clear
+
+    elsif @highlighted.include? @curr_pos
+      move_piece(@selected, @curr_pos)
+      toggle_turn
+      @selected = nil
+      @highlighted.clear
+    else
+      @selected = nil
+      @highlighted.clear
+    end
+  end
+
+  def on_board(coords)
+    @curr_pos[0] + coords[0] < 8 &&
+    @curr_pos[1] + coords[1] < 8 &&
+    @curr_pos[0] + coords[0] >= 0 &&
+    @curr_pos[1] + coords[1] >= 0
+  end
+
+  def render
+    system "clear"
+
+    (0...8).each do |x|
+      (0...8).each do |y|
+        square = @board[[x, y]]
+
+        #TODO refactor this crap
+        bg = (x + y) % 2 == 0 ? :white : :grey
+        bg = :green if @highlighted.include? [x, y]
+        bg = :cyan if @curr_pos == [x, y]
+
+        str = get_string(square)
+        print str.colorize(:background => bg)
+      end
+      puts
+    end
+    puts @message
+  end
+
+  def get_string(square)
+    square.nil? ? "   " : square.to_string
+  end
 
 
 end
 
 game = Display.new
 game.play
-
-=begin
-TODO Complete the game class by finishing all the pieces with move functionality
-and adding methods for getting all possible moves. Also have to consider how
-to address killing other pieces - should probably make the possible move method
-in the board module so it can access the board.
-
-Will have to let the Display class call the get possible move method and move
-the pieces so that they will not move otherwise. Also need to highlight the
-possible moves and add cntrl-c to the escape sequences.
-
-=end
