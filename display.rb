@@ -1,12 +1,10 @@
 require "colorize"
-require_relative "pieces/moves"
-require_relative "game"
+require_relative "board"
 require_relative "cursorable"
 
-class Display < Chess
+class Display < Board
 
   include Cursorable
-
 
   def initialize
     super
@@ -25,9 +23,7 @@ class Display < Chess
       end
       @message = update_status
     end
-
     render
-
   end
 
   def move_cursor(move)
@@ -74,7 +70,6 @@ class Display < Chess
       (0...8).each do |y|
         square = @board[[x, y]]
 
-        #TODO refactor this crap
         bg = (x + y) % 2 == 0 ? :white : :grey
         bg = :green if @highlighted.include? [x, y]
         bg = :cyan if @curr_pos == [x, y]
@@ -90,8 +85,6 @@ class Display < Chess
   def get_string(square)
     square.nil? ? "   " : square.to_string
   end
-
-
 end
 
 game = Display.new

@@ -57,7 +57,7 @@ module PieceMethods
         curr_square = board[coords]
       end
 
-      #kill clause
+      # kill clause
       if !curr_square.nil? && curr_square.color != @color
         moves.push(coords)
       end

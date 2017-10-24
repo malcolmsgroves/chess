@@ -1,6 +1,6 @@
 require_relative 'pieces/pieces'
 
-class Chess
+class Board
 
   def initialize
     @turn = :white
@@ -77,13 +77,6 @@ class Chess
     end
   end
 
-=begin
-Need to have a method for checking for check.
-First: remove all possible moves that result in a check
-Second: Tell if a player is IN check
-Third: Identify checkmate
-=end
-
   def to_check(coords, move)
     from = @board[coords].dup
     to = @board[move].dup
@@ -126,7 +119,6 @@ Third: Identify checkmate
     end
   end
 
-  # check if a specified color is in check
   def check?(color)
     each do |piece|
       if !piece.nil? && piece.color != color
